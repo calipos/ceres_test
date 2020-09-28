@@ -1,3 +1,5 @@
+//g++ TEST_optimize_rotation.cpp -I/home/tx2/repo/ceres-solver/build/install/usr/local/include -I/usr/local/include/eigen3 -I/usr/include -L/home/tx2/repo/ceres-solver/build/install/usr/local/lib -lceres -lglog -lpthread -lopenblas
+
 #include <vector>
 #include <cmath>
 #include <cstdio>
