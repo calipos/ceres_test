@@ -9,7 +9,37 @@
 #include "glog/logging.h"
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
-
+#if (defined WIN32 || defined _WIN32) 
+#ifdef NDEBUG
+#pragma comment(lib,"quirc.lib")
+#pragma comment(lib,"ade.lib")
+#pragma comment(lib,"libprotobuf.lib")
+#pragma comment(lib,"ittnotify.lib")
+#pragma comment(lib,"libjpeg-turbo.lib")
+#pragma comment(lib,"libjasper.lib")
+#pragma comment(lib,"IlmImf.lib")
+#pragma comment(lib,"libtiff.lib")
+#pragma comment(lib,"libwebp.lib")
+#pragma comment(lib,"libpng.lib")
+#pragma comment(lib,"zlib.lib")
+#pragma comment(lib,"opencv_world440.lib") 
+#endif
+#ifdef _DEBUG
+//#pragma comment(lib,"shlwapi.lib") 
+#pragma comment(lib,"quircd.lib")
+#pragma comment(lib,"ade.lib")
+#pragma comment(lib,"libprotobufd.lib")
+#pragma comment(lib,"ittnotifyd.lib")
+#pragma comment(lib,"libjpeg-turbod.lib")
+#pragma comment(lib,"libjasperd.lib")
+#pragma comment(lib,"IlmImfd.lib")
+#pragma comment(lib,"libtiffd.lib")
+#pragma comment(lib,"libwebpd.lib")
+#pragma comment(lib,"libpngd.lib")
+#pragma comment(lib,"zlibd.lib")
+#pragma comment(lib,"opencv_world440d.lib") 
+#endif
+#endif
 #define RandUnit (rand()%10000/5000.-1)
 #define UseAutoDiff 0
 struct RotationError {
@@ -177,7 +207,7 @@ cv::Point3f TESTrotation( )
 		cv::Mat R_delta = cameraRgt * cameraR.t();
 		cv::Point3d zyx = matrixToZyx<float>(R_delta);
 	}
-	TEST_matrictDev();
+	//TEST_matrictDev();
 	int sampleNum = 1000;
 	std::vector<double>before(3 * sampleNum);
 	std::vector<double>after(3 * sampleNum);
@@ -233,13 +263,13 @@ cv::Point3f TESTrotation( )
 	options.minimizer_progress_to_stdout = true;
 	ceres::Solver::Summary summary;
 	ceres::Solve(options, &problem, &summary);
-	std::cout << summary.FullReport() << "\n"; 
+	//std::cout << summary.FullReport() << "\n"; 
 	cv::Point3f ret;
 	ret.x = rVec[0];
 	ret.y = rVec[1];
 	ret.z = rVec[2];
-
-	LOG(INFO) << axisDir;
+	LOG(INFO) << ret;
+	LOG(INFO) <<"gt="<< axisDir;
 	return ret;
 }
 
